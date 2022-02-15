@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Naujienlaiškio prenumerata</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    	div {
+            padding: 10px;
+            background-color: #f6f6f6;
+            overflow: hidden;
+        }
+    	input[type=text], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type=button]{
+            width: auto;
+            float: right;
+            cursor: pointer;
+            padding: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div>
+            <input type="text" id="txtName" placeholder="Jūsų el. pašto adresas" />
+        </div>
+        <div>
+            <input type="button" id="bt" value="Prenumeruoti" onclick="saveFile()" />
+        </div>
+    </div>
+</body>
+<script>
+
+
+
+    let saveFile = () => {
+
+    	const name = document.getElementById('txtName');
+
+
+        let data =
+            '\r Vartotojo el. pašto adresas: ' + name.value + ' \r\n ' ;
+
+
+        const textToBLOB = new Blob([data], { type: 'text/plain' });
+        const sFileName = 'Prenumeratoriai.txt';
+
+        let newLink = document.createElement("a");
+        newLink.download = sFileName;
+
+        if (window.webkitURL != null) {
+            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        }
+        else {
+            newLink.href = window.URL.createObjectURL(textToBLOB);
+            newLink.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+
+        newLink.click();
+    }
+</script>
+</html>
